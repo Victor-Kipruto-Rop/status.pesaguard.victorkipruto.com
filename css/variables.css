@@ -1,0 +1,148 @@
+/* -----------------------------------------------------------------------
+ * PesaGuard Status Site — Design Tokens
+ * -----------------------------------------------------------------------
+ * Exact mirror of the PesaGuard docs palette and typography. Every value is
+ * shared one-to-one so the status site is visually indistinguishable from the
+ * rest of the PesaGuard surface.
+ * ------------------------------------------------------------------------- */
+
+:root {
+  --ink: #0e1311;
+  --ink-soft: #161d1a;
+  --paper: #f4f5ef;
+  --paper-raised: #fbfcf7;
+  --paper-sunken: #e9ece2;
+  --paper-deep: #dfe4d8;
+  --lime: #d8ff4f;
+  --lime-deep: #6e831d;
+  --lime-ink: #4d5d12;
+  --lime-wash: rgba(216, 255, 79, 0.18);
+  --lime-veil: rgba(216, 255, 79, 0.07);
+  --forest: #123328;
+  --forest-soft: #1c4739;
+  --signal-green: #8fce3f;
+  --signal-amber: #e5a63c;
+  --signal-red: #d97a6c;
+  --text: #0e1311;
+  --text-muted: #5e6a63;
+  --text-faint: #8a958d;
+  --line: #d7ddd0;
+  --line-soft: #e5e9de;
+  --line-strong: #b7c1ae;
+
+  /* Status-specific signal colours (extended from the shared palette). */
+  --status-operational: var(--signal-green);
+  --status-degraded: var(--signal-amber);
+  --status-outage: var(--signal-red);
+  --status-maintenance: var(--lime-deep);
+
+  /* Radii. */
+  --r-sm: 7px;
+  --r-md: 12px;
+  --r-lg: 20px;
+  --r-full: 999px;
+
+  /* Shadows. */
+  --shadow-xs: 0 1px 2px rgba(14, 19, 17, 0.06);
+  --shadow-sm: 0 6px 18px -10px rgba(14, 19, 17, 0.28);
+  --shadow-md: 0 18px 40px -24px rgba(14, 19, 17, 0.34);
+
+  /* Typography. */
+  --font-sans: Manrope, "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono: "DM Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Layout. */
+  --site-max: 1340px;
+  --header-h: 64px;
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  color-scheme: light;
+}
+
+/* --- Dark theme -----------------------------------------------------------
+ * Device-driven only: the OS preference decides the palette.
+ * There is no in-page toggle and no data-theme override.
+ * ----------------------------------------------------------------------- */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --paper: #0b100d;
+    --paper-raised: #121a16;
+    --paper-sunken: #070a08;
+    --paper-deep: #050806;
+    --text: #edf1ea;
+    --text-muted: #a4b0a8;
+    --text-faint: #6d7973;
+    --line: #23302a;
+    --line-soft: #19231f;
+    --line-strong: #3a4a41;
+    --forest: #7ddc8f;
+    --forest-soft: #58b571;
+    --lime-ink: #d8ff4f;
+    --lime-deep: #bce85a;
+    --lime-wash: rgba(216, 255, 79, 0.14);
+    --lime-veil: rgba(216, 255, 79, 0.09);
+    --header-bg: rgba(11, 16, 13, 0.86);
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --shadow-sm: 0 6px 18px -10px rgba(0, 0, 0, 0.55);
+    --shadow-md: 0 18px 40px -24px rgba(0, 0, 0, 0.6);
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-h) + 20px);
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--forest); }
+a:hover { color: var(--lime-ink); }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Keyboard focus is always visible. */
+:focus-visible {
+  outline: 2px solid var(--lime-deep);
+  outline-offset: 2px;
+}
+
+.visually-hidden:focus-visible {
+  position: fixed;
+  top: 14px;
+  left: 14px;
+  z-index: 50;
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 10px 16px;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+  background: var(--paper-raised);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-sm);
+  box-shadow: var(--shadow-md);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+::selection { background: var(--lime); color: var(--ink); }
