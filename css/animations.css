@@ -60,8 +60,8 @@
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 0.6; box-shadow: 0 0 0 0 var(--lime-veil); }
-  50% { opacity: 1; box-shadow: 0 0 0 8px var(--lime-veil); }
+  0%, 100% { opacity: 0.6; box-shadow: 0 0 0 0 var(--accent-wash); }
+  50% { opacity: 1; box-shadow: 0 0 0 8px var(--accent-wash); }
 }
 
 @keyframes refresh-pulse {
@@ -89,7 +89,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, transparent, rgba(216, 255, 79, 0.08), transparent);
+  background: linear-gradient(90deg, transparent, rgba(18, 20, 26, 0.05), transparent);
   animation: shimmer 1.5s infinite;
 }
 

@@ -1,99 +1,56 @@
 /* -----------------------------------------------------------------------
- * PesaGuard Status Site — Home page (index.html)
+ * PesaGuard Status — Home page (index.html)
+ * Statuspage-style: a colored banner carries the overall state, plain
+ * component rows below, dated incident history further down.
  * ------------------------------------------------------------------------- */
 
-.status-hero {
-  padding: clamp(28px, 4vw, 48px) 0 clamp(20px, 3vw, 32px);
-  border-bottom: 1px solid var(--line-soft);
-}
+.status-hero { padding: 24px 0 20px; }
 
 .status-eyebrow {
   margin: 0 0 10px;
-  font: 500 12px / 1.4 var(--font-mono);
+  font: 600 0.78rem / 1.4 var(--font-sans);
+  color: var(--text-faint);
   text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: var(--lime-deep);
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  letter-spacing: 0.03em;
+  display: block;
 }
 
-.status-eyebrow::before {
-  content: "";
-  width: 24px;
-  height: 1px;
-  background: currentColor;
-  opacity: 0.6;
-}
+/* --- Primary status banner -------------------------------------------------- */
 
-/* --- Primary status line -------------------------------------------------- */
-
-.status-headline {
-  margin: 0 0 8px;
-  font-size: clamp(1.55rem, 1.15rem + 1.9vw, 2.1rem);
-  line-height: 1.08;
-  letter-spacing: -0.032em;
-  font-weight: 700;
-}
+.status-headline { margin: 0 0 16px; }
 
 .status-state {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 12px;
   min-width: 0;
+  padding: 18px 20px;
+  border-radius: var(--r-lg);
+  background: var(--text-faint);
+  color: #fff;
+  font-size: clamp(1.15rem, 1.05rem + 0.5vw, 1.35rem);
+  font-weight: 600;
+  line-height: 1.3;
 }
 
-.status-glyph {
-  width: 24px;
-  height: 24px;
-  flex: none;
-  transition: color 180ms var(--ease-out), transform 180ms var(--ease-out);
-}
+.status-glyph { width: 20px; height: 20px; flex: none; fill: #fff; }
+.status-state-text { display: inline-block; }
 
-.status-state-text {
-  display: inline-block;
-}
-
-.status-state[data-state="operational"] { color: var(--lime-ink); }
-.status-state[data-state="degraded"] { color: #8a5a0e; }
+.status-state[data-state="operational"] { background: var(--signal-green); }
+.status-state[data-state="degraded"] { background: var(--signal-amber); }
 .status-state[data-state="partial-outage"],
 .status-state[data-state="major-outage"],
-.status-state[data-state="outage"] { color: #8a3a30; }
-.status-state[data-state="maintenance"] { color: #3d7ea6; }
-.status-state[data-state="unknown"] { color: var(--text-muted); }
-.status-state[data-state="loading"] { color: var(--text-faint); }
-.status-state[data-state="error"] { color: #8a3a30; }
-
-@media (prefers-color-scheme: dark) {
-  .status-state[data-state="degraded"] { color: #e5a63c; }
-  .status-state[data-state="partial-outage"],
-  .status-state[data-state="major-outage"],
-  .status-state[data-state="outage"],
-  .status-state[data-state="error"] { color: #d97a6c; }
-  .status-state[data-state="maintenance"] { color: #7fb6d5; }
-}
-
-/* Subtle pulse only on attention states — never on operational. */
-.status-state[data-state="degraded"] .status-glyph,
-.status-state[data-state="partial-outage"] .status-glyph,
-.status-state[data-state="major-outage"] .status-glyph,
-.status-state[data-state="outage"] .status-glyph {
-  animation: status-glyph-pulse 2.4s ease-in-out infinite;
-}
-
-@keyframes status-glyph-pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.08); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .status-state .status-glyph { animation: none; }
-}
+.status-state[data-state="outage"] { background: var(--signal-red); }
+.status-state[data-state="maintenance"] { background: var(--signal-slate); }
+.status-state[data-state="unknown"] { background: var(--text-faint); }
+.status-state[data-state="loading"] { background: var(--line-strong); color: var(--text-muted); }
+.status-state[data-state="loading"] .status-glyph { fill: var(--text-muted); }
+.status-state[data-state="error"] { background: var(--signal-red); }
 
 .status-hero-subtitle {
-  margin: 0 0 18px;
+  margin: 0 0 16px;
   max-width: 62ch;
-  font-size: 0.95rem;
+  font-size: 0.88rem;
   color: var(--text-muted);
 }
 
@@ -104,243 +61,121 @@
   align-items: center;
   gap: 14px;
   flex-wrap: wrap;
-  font-size: 12.5px;
+  font-size: 0.82rem;
   color: var(--text-faint);
 }
 
-.freshness-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  min-width: 0;
-}
-
+.freshness-item { display: inline-flex; align-items: center; gap: 7px; min-width: 0; }
 .freshness-label { color: var(--text-faint); }
+#last-checked { font-weight: 500; color: var(--text-muted); }
 
-#last-checked {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--text-muted);
-}
-
-.freshness-sep {
-  width: 1px;
-  height: 14px;
-  background: var(--line);
-  flex: none;
-}
+.freshness-sep { width: 1px; height: 14px; background: var(--line); flex: none; }
 
 .pulse-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--signal-green);
-  flex: none;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--signal-green); flex: none;
   animation: pulse-dot 2s ease-in-out infinite;
 }
 
-#autorefresh[data-paused="true"] .pulse-dot {
-  background: var(--text-faint);
-  animation: none;
-}
+#autorefresh[data-paused="true"] .pulse-dot { background: var(--text-faint); animation: none; }
 
-@keyframes pulse-dot {
-  0%, 100% { opacity: 0.55; }
-  50% { opacity: 1; }
-}
+@keyframes pulse-dot { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
 
 /* --- Refresh control --------------------------------------------------------- */
 
 .btn-refresh {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 7px 14px;
-  border: 1px solid var(--line);
-  border-radius: var(--r-full);
-  background: var(--paper-raised);
-  color: var(--text-muted);
-  font: 600 11px / 1 var(--font-mono);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 0; border: none; background: none;
+  color: var(--accent); font: 500 0.82rem / 1 var(--font-sans);
   cursor: pointer;
-  transition: border-color 140ms var(--ease-out), color 140ms var(--ease-out), background 140ms var(--ease-out);
 }
 
-.btn-refresh:hover:not(:disabled) {
-  border-color: var(--line-strong);
-  color: var(--text);
-  background: var(--paper-sunken);
-}
-
-.btn-refresh:focus-visible {
-  outline: 2px solid var(--lime-deep);
-  outline-offset: 2px;
-}
-
+.btn-refresh:hover:not(:disabled) { color: var(--accent-strong); text-decoration: underline; }
 .btn-refresh:disabled { cursor: wait; opacity: 0.7; }
+.btn-refresh-icon { width: 12px; height: 12px; flex: none; }
+.btn-refresh[aria-busy="true"] .btn-refresh-icon { animation: refresh-spin 0.9s linear infinite; }
 
-.btn-refresh-icon { width: 13px; height: 13px; flex: none; }
-
-.btn-refresh[aria-busy="true"] .btn-refresh-icon {
-  animation: refresh-spin 0.9s linear infinite;
-}
-
-@keyframes refresh-spin {
-  to { transform: rotate(360deg); }
-}
+@keyframes refresh-spin { to { transform: rotate(360deg); } }
 
 @media (prefers-reduced-motion: reduce) {
   .pulse-dot, .btn-refresh[aria-busy="true"] .btn-refresh-icon { animation: none; }
 }
 
-/* --- Unverified / not-connected notice -------------------------------------
- * Shown when the page has no monitoring source. It must be visually distinct
- * so a reader never mistakes "unknown" for "healthy".
- * -------------------------------------------------------------------------- */
+/* --- Unverified / not-connected notice -------------------------------------- */
 
 .status-unverified {
-  border: 1px solid var(--line-strong);
+  border: 1px solid var(--line);
   border-left: 3px solid var(--signal-amber);
-  border-radius: 0 var(--r-md) var(--r-md) 0;
-  background: var(--paper-raised);
-  padding: 14px 18px;
-  margin: 0 0 22px;
-  text-align: left;
+  border-radius: var(--r-md);
+  background: var(--paper);
+  padding: 10px 14px;
+  margin: 14px 0 20px;
 }
 
-.status-unverified strong {
-  display: block;
-  font: 600 11px / 1.4 var(--font-mono);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-faint);
-  margin-bottom: 4px;
+.status-unverified strong { display: block; font: 600 0.82rem / 1.4 var(--font-sans); color: var(--text); margin-bottom: 3px; }
+.status-unverified p { margin: 0; color: var(--text-muted); font-size: 0.84rem; }
+
+/* --- Active incident banner (rendered only when real; JS class) ------------- */
+
+.status-incident-banner {
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--signal-red);
+  border-radius: var(--r-md);
+  background: var(--paper);
+  padding: 14px 16px;
+  margin: 0 0 20px;
 }
 
-.status-unverified p {
-  margin: 0;
-  color: var(--text-muted);
-  font-size: 13.5px;
-}
+.status-incident-banner h2 { margin: 0 0 4px; font-size: 0.95rem; color: var(--text); }
+.status-incident-banner p { margin: 0; font-size: 0.86rem; color: var(--text-muted); }
+.status-incident-banner a { font-weight: 500; }
 
 /* --- Subscription (unavailable) -------------------------------------------- */
 
 .status-subscription form input[disabled],
-.status-subscription form button[disabled] {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
+.status-subscription form button[disabled] { opacity: 0.6; cursor: not-allowed; }
 
-/* --- Service list ---------------------------------------------------------- */
+/* --- Service list ------------------------------------------------------------ */
 
-.service-list {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-  margin: 0;
-}
-
-.service-status-card { padding: 13px 16px; gap: 12px; min-width: 0; }
-
-.service-status-card .service-name { min-width: 0; }
-
-.service-status-card .service-name .status-dot {
-  width: 10px;
-  height: 10px;
-  margin: 0;
-  box-shadow: none;
-}
-
-.service-status-card .service-name .status-icon { width: 18px; height: 18px; }
-
-.service-name-text {
-  display: block;
-  font-size: 14px;
-  font-weight: 650;
-  letter-spacing: -0.01em;
-}
+.service-list { display: block; margin: 0; }
+.service-name-text { display: block; font-size: 0.9rem; }
 
 .service-name-sub {
-  display: block;
-  margin-top: 2px;
-  font-size: 12px;
-  font-weight: 400;
-  color: var(--text-muted);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  display: block; margin-top: 2px; font-size: 0.78rem; color: var(--text-faint);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 
-.service-status-card .status-pill { font-size: 10.5px; padding: 4px 11px; }
-
-.service-meta-sub {
-  display: block;
-  margin-top: 5px;
-  font: 500 10.5px / 1.4 var(--font-mono);
-  letter-spacing: 0.04em;
-  color: var(--text-faint);
-}
-
-/* --- Home empty / error states (shared by all home sections) ------------- */
+/* --- Home empty / error states (shared by all home sections) --------------- */
 
 .status-empty {
-  border: 1px dashed var(--line-strong);
-  border-radius: var(--r-md);
-  background: var(--paper-raised);
-  padding: 18px 20px;
-  display: flex;
-  align-items: flex-start;
-  gap: 13px;
+  border: none;
+  border-top: 1px solid var(--line);
+  border-radius: 0;
+  background: none;
+  padding: 20px 0;
 }
 
-.status-empty .status-empty-glyph {
-  width: 18px;
-  height: 18px;
-  flex: none;
-  margin-top: 2px;
-  color: var(--text-faint);
-}
-
-.status-empty strong {
-  display: block;
-  font-size: 13.5px;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-}
-
-.status-empty p {
-  margin: 3px 0 0;
-  font-size: 13px;
-  color: var(--text-muted);
-}
-
-.status-empty a { font-weight: 650; }
+.status-empty h2, .status-empty strong { display: block; font-size: 0.95rem; font-weight: 600; color: var(--text); margin: 0 0 4px; }
+.status-empty p { margin: 3px 0 0; font-size: 0.86rem; color: var(--text-muted); max-width: 48ch; }
+.status-empty a { font-weight: 500; }
 
 .status-error-box {
-  border: 1px solid rgba(217, 122, 108, 0.45);
+  border: 1px solid var(--line);
   border-radius: var(--r-md);
-  background: var(--paper-raised);
-  padding: 18px 20px;
+  background: var(--paper);
+  padding: 16px;
 }
 
-.status-error-box p {
-  margin: 0 0 12px;
-  font-size: 13.5px;
-  color: var(--text-muted);
-}
-
+.status-error-box p { margin: 0 0 12px; font-size: 0.88rem; color: var(--text-muted); }
 .status-error-box strong { color: var(--text); }
 
 .btn-retry {
-  padding: 8px 18px;
+  padding: 6px 14px;
   border: 1px solid var(--line-strong);
-  border-radius: var(--r-full);
-  background: var(--paper-raised);
+  border-radius: var(--r-md);
+  background: var(--paper);
   color: var(--text);
-  font: 600 11px / 1 var(--font-mono);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font: 500 0.82rem / 1 var(--font-sans);
   cursor: pointer;
 }
 
@@ -350,132 +185,112 @@
 
 .status-section {
   margin-top: 28px;
-  padding-top: 26px;
-  border-top: 1px solid var(--line-soft);
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
 }
 
-.status-section .status-section-title { margin-bottom: 16px; }
+.status-section .status-section-title { margin-bottom: 4px; }
+.status-section .status-section-title h2 { margin: 0; font-size: 0.98rem; font-weight: 600; }
+.status-section-sub { margin: 4px 0 14px; font-size: 0.84rem; color: var(--text-muted); }
 
-.status-section .status-section-title h2 {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 1.05rem;
-  letter-spacing: -0.015em;
+/* Homepage section headers use a different markup (.section-head), distinct
+ * from the .status-section-title pattern used on incidents/maintenance/uptime. */
+
+.section-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 4px;
 }
 
-.status-section-sub {
-  margin: 4px 0 0;
-  font-size: 13px;
-  color: var(--text-muted);
+.section-head-text h2 { margin: 0; font-size: 0.98rem; font-weight: 600; }
+.section-head-text p { margin: 4px 0 0; font-size: 0.84rem; color: var(--text-muted); }
+
+.section-link {
+  flex: none;
+  font: 500 0.82rem / 1.4 var(--font-sans);
+  color: var(--accent);
+  white-space: nowrap;
 }
 
-/* --- Uptime summary -------------------------------------------------------- */
+.section-link:hover { color: var(--accent-strong); }
 
-.status-uptime-summary {
+@media (max-width: 560px) {
+  .section-head { flex-direction: column; align-items: flex-start; gap: 4px; }
+}
+
+/* --- Uptime summary ---------------------------------------------------------- */
+
+.status-uptime-summary,
+.uptime-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 10px;
-  margin: 0 0 22px;
+  gap: 0;
+  margin: 6px 0 22px;
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
 }
 
-.status-uptime-summary .uptime-card {
-  border: 1px solid var(--line);
-  border-radius: var(--r-md);
-  background: var(--paper-raised);
+.uptime-card {
+  border: none;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  background: var(--paper);
   text-align: left;
-  padding: 16px 16px 14px;
-  box-shadow: var(--shadow-xs);
+  padding: 14px 14px 13px;
   min-width: 0;
 }
 
-.status-uptime-summary .uptime-card .uptime-value {
-  font-size: 1.35rem;
-  font-weight: 800;
-  letter-spacing: -0.03em;
+.uptime-card .uptime-value {
+  font-family: var(--font-mono);
+  font-size: 1.2rem;
+  font-weight: 600;
   font-variant-numeric: tabular-nums;
+  color: var(--text);
 }
 
-.status-uptime-summary .uptime-card .uptime-value.is-missing {
-  color: var(--text-faint);
-  font-weight: 650;
-  font-size: 1.02rem;
-}
-
-.status-uptime-summary .uptime-card .uptime-label {
-  font: 600 10px / 1.4 var(--font-mono);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-faint);
-  margin-top: 6px;
-}
+.uptime-card .uptime-value.is-missing { color: var(--text-faint); font-weight: 500; font-size: 0.95rem; }
+.uptime-card .uptime-label { font: 500 0.74rem / 1.4 var(--font-sans); color: var(--text-faint); margin-top: 5px; }
 
 .uptime-bar {
   height: 4px;
   border-radius: var(--r-full);
   background: var(--paper-sunken);
-  margin-top: 12px;
+  margin-top: 10px;
   overflow: hidden;
 }
 
-.uptime-bar i {
-  display: block;
-  height: 100%;
-  border-radius: var(--r-full);
-  background: var(--signal-green);
-}
-
+.uptime-bar i { display: block; height: 100%; background: var(--signal-green); }
 .uptime-bar[data-tone="degraded"] i { background: var(--signal-amber); }
 .uptime-bar[data-tone="outage"] i { background: var(--signal-red); }
-.uptime-bar[data-tone="maintenance"] i { background: var(--lime-deep); }
+.uptime-bar[data-tone="maintenance"] i { background: var(--signal-slate); }
 .uptime-bar[data-tone="unknown"] i { background: transparent; }
 
-/* --- Home uptime visualisation --------------------------------------------- */
+/* --- Home uptime visualisation (daily strip) -------------------------------- */
 
 .uptime-viz {
   border: 1px solid var(--line);
   border-radius: var(--r-md);
-  background: var(--paper-raised);
-  padding: 18px 18px 16px;
-  box-shadow: var(--shadow-xs);
+  background: var(--paper);
+  padding: 16px;
 }
 
-.uptime-viz-head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 12px;
-}
+.uptime-viz-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+.uptime-viz-head h3 { margin: 0; font-size: 0.9rem; font-weight: 600; }
+.uptime-viz-caption { font-size: 0.78rem; color: var(--text-faint); }
 
-.uptime-viz-head h3 {
-  margin: 0;
-  font-size: 13.5px;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-}
-
-.uptime-viz-caption {
-  font: 500 11px / 1.4 var(--font-mono);
-  color: var(--text-faint);
-}
-
-.uptime-strip {
-  display: flex;
-  gap: 3px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
+.uptime-strip { display: flex; gap: 2px; margin: 0; padding: 0; list-style: none; }
 
 .uptime-seg {
   position: relative;
   flex: 1 1 0;
-  min-width: 4px;
+  min-width: 3px;
   height: 34px;
   padding: 0;
-  border: 1px solid transparent;
-  border-radius: 3px;
+  border: none;
+  border-radius: 2px;
   background: var(--paper-sunken);
   cursor: default;
   appearance: none;
@@ -488,24 +303,11 @@ button.uptime-seg { cursor: pointer; }
 .uptime-seg[data-status="partial-outage"],
 .uptime-seg[data-status="major-outage"],
 .uptime-seg[data-status="outage"] { background: var(--signal-red); }
-.uptime-seg[data-status="maintenance"] { background: var(--lime-deep); }
-.uptime-seg[data-status="unknown"] {
-  background: var(--paper-sunken);
-  border-color: var(--line-soft);
-}
+.uptime-seg[data-status="maintenance"] { background: var(--signal-slate); }
+.uptime-seg[data-status="unknown"] { background: var(--paper-sunken); }
 
-button.uptime-seg:hover,
-button.uptime-seg:focus-visible {
-  border-color: var(--line-strong);
-  outline: none;
-}
+button.uptime-seg:hover, button.uptime-seg:focus-visible { outline: none; opacity: 0.75; }
 
-button.uptime-seg:focus-visible {
-  box-shadow: 0 0 0 2px var(--paper), 0 0 0 4px var(--lime-deep);
-}
-
-/* Lightweight CSS tooltip. Screen-reader users receive the same text through
- * the button aria-label, so the tooltip is visual reinforcement only. */
 .uptime-seg::after {
   content: attr(data-tip);
   position: absolute;
@@ -514,12 +316,11 @@ button.uptime-seg:focus-visible {
   transform: translateX(-50%) translateY(2px);
   min-width: max-content;
   max-width: 220px;
-  padding: 7px 10px;
-  border: 1px solid var(--line);
+  padding: 6px 9px;
   border-radius: var(--r-sm);
-  background: var(--ink-soft);
-  color: var(--paper);
-  font: 500 11px / 1.5 var(--font-mono);
+  background: var(--ink);
+  color: #fff;
+  font: 400 0.76rem / 1.5 var(--font-sans);
   white-space: pre-line;
   text-align: left;
   opacity: 0;
@@ -529,257 +330,93 @@ button.uptime-seg:focus-visible {
   z-index: 20;
 }
 
-button.uptime-seg:hover::after,
-button.uptime-seg:focus-visible::after {
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(-50%) translateY(0);
+button.uptime-seg:hover::after, button.uptime-seg:focus-visible::after {
+  opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0);
 }
 
-.uptime-legend {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px 16px;
-  margin: 14px 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.uptime-legend li {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  font: 500 11px / 1.4 var(--font-mono);
-  color: var(--text-muted);
-  margin: 0;
-}
-
-.uptime-legend .legend-swatch {
-  width: 10px;
-  height: 10px;
-  border-radius: 2px;
-  flex: none;
-}
-
+.uptime-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 14px 0 0; padding: 0; list-style: none; }
+.uptime-legend li { display: inline-flex; align-items: center; gap: 6px; font-size: 0.78rem; color: var(--text-muted); margin: 0; }
+.uptime-legend .legend-swatch { width: 8px; height: 8px; border-radius: 2px; flex: none; }
 .uptime-legend .legend-swatch[data-status="operational"] { background: var(--signal-green); }
 .uptime-legend .legend-swatch[data-status="degraded"] { background: var(--signal-amber); }
 .uptime-legend .legend-swatch[data-status="outage"] { background: var(--signal-red); }
-.uptime-legend .legend-swatch[data-status="maintenance"] { background: var(--lime-deep); }
-.uptime-legend .legend-swatch[data-status="unknown"] {
-  background: var(--paper-sunken);
-  border: 1px solid var(--line-strong);
-}
+.uptime-legend .legend-swatch[data-status="maintenance"] { background: var(--signal-slate); }
+.uptime-legend .legend-swatch[data-status="unknown"] { background: var(--paper-sunken); border: 1px solid var(--line-strong); }
 
-.uptime-viz-note {
-  margin: 12px 0 0;
-  font-size: 12.5px;
-  color: var(--text-faint);
-}
-
-/* --- Active incident banner (rendered only when real) ------------------------ */
-
-.active-incident {
-  border: 1px solid var(--line);
-  border-left: 3px solid var(--signal-red);
-  border-radius: 0 var(--r-md) var(--r-md) 0;
-  background: var(--paper-raised);
-  padding: 18px 20px;
-  margin-top: 20px;
-  box-shadow: var(--shadow-xs);
-  animation: incident-enter 320ms var(--ease-out);
-}
-
-.active-incident[data-severity="identified"],
-.active-incident[data-severity="medium"] { border-left-color: var(--signal-amber); }
-
-.active-incident[data-severity="monitoring"],
-.active-incident[data-severity="low"] { border-left-color: var(--signal-green); }
-
-@keyframes incident-enter {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: none; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .active-incident { animation: none; }
-}
-
-.active-incident-top {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-bottom: 8px;
-}
-
-.active-incident h2 {
-  margin: 0 0 6px;
-  font-size: 1.05rem;
-  letter-spacing: -0.015em;
-  color: var(--text);
-}
-
-.active-incident p { margin: 0 0 10px; font-size: 13.5px; color: var(--text-muted); }
-
-.active-incident dl {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px 22px;
-  margin: 0 0 12px;
-}
-
-.active-incident dl > div { display: flex; gap: 8px; font-size: 12.5px; }
-
-.active-incident dt {
-  font: 600 10px / 1.8 var(--font-mono);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-faint);
-}
-
-.active-incident dd { margin: 0; color: var(--text-muted); }
-
-.active-incident .incident-link { font-size: 13px; font-weight: 650; }
+.uptime-viz-note { margin: 12px 0 0; font-size: 0.78rem; color: var(--text-faint); }
 
 /* --- Subscription ------------------------------------------------------------ */
 
-.status-subscription {
-  margin-top: 28px;
-  padding: 24px;
-  border: 1px solid var(--line);
-  border-radius: var(--r-md);
-  background: var(--paper-raised);
-  box-shadow: var(--shadow-xs);
-}
-
-.status-subscription h2 { font-size: 1.05rem; margin: 0 0 6px; }
-.status-subscription > p { color: var(--text-muted); font-size: 13.5px; max-width: 56ch; }
-
-.status-subscription-form { margin-top: 16px; }
+.status-subscription { margin-top: 28px; padding: 24px 0 0; border-top: 1px solid var(--line); }
+.status-subscription h2 { font-size: 0.98rem; margin: 0 0 6px; }
+.status-subscription > p { color: var(--text-muted); font-size: 0.86rem; max-width: 54ch; }
+.status-subscription-form { margin-top: 14px; }
 
 .status-subscription-form label {
-  display: block;
-  margin-bottom: 8px;
-  font: 600 11px / 1.4 var(--font-mono);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-faint);
+  display: block; margin-bottom: 8px; font: 500 0.8rem / 1.4 var(--font-sans); color: var(--text-faint);
 }
 
-.subscribe-row { display: flex; gap: 10px; }
+.subscribe-row { display: flex; gap: 10px; max-width: 420px; }
 
 .status-subscription-form input[type="email"] {
-  flex: 1 1 auto;
-  min-width: 0;
-  padding: 11px 14px;
-  border: 1px solid var(--line);
-  border-radius: var(--r-sm);
-  background: var(--paper);
-  font-size: 13.5px;
-  color: var(--text);
+  flex: 1 1 auto; min-width: 0; padding: 8px 12px;
+  border: 1px solid var(--line-strong); border-radius: var(--r-md);
+  background: var(--paper); font-size: 0.86rem; color: var(--text);
 }
 
 .status-subscription-form input[type="email"]::placeholder { color: var(--text-faint); }
-
-.status-subscription-form input[type="email"]:focus {
-  outline: 2px solid var(--lime-deep);
-  outline-offset: 2px;
-  border-color: var(--lime-deep);
-}
-
+.status-subscription-form input[type="email"]:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
 .status-subscription-form input[aria-invalid="true"] { border-color: var(--signal-red); }
 
 .status-subscription-form button[type="submit"] {
-  flex: none;
-  padding: 0 22px;
-  min-height: 42px;
-  border-radius: var(--r-full);
-  background: linear-gradient(135deg, var(--lime), #c9f37a);
-  color: var(--ink);
-  font: 700 0.85rem / 1 var(--font-sans);
-  border: none;
-  box-shadow: 0 6px 18px -10px rgba(110, 131, 29, 0.28);
-  cursor: pointer;
-  transition: transform 140ms var(--ease-out), opacity 140ms var(--ease-out);
+  flex: none; padding: 0 18px; min-height: 36px;
+  border-radius: var(--r-md); background: var(--accent); color: #fff;
+  font: 600 0.84rem / 1 var(--font-sans); border: none; cursor: pointer;
 }
 
-.status-subscription-form button[type="submit"]:hover:not(:disabled) { transform: translateY(-1px); }
-.status-subscription-form button[type="submit"]:disabled { cursor: wait; opacity: 0.7; }
+.status-subscription-form button[type="submit"]:hover:not(:disabled) { background: var(--accent-strong); }
+.status-subscription-form button[type="submit"]:disabled { cursor: wait; opacity: 0.6; }
 
-.subscribe-status { margin: 10px 0 0; font-size: 13px; min-height: 20px; }
-.subscribe-status[data-kind="success"] { color: var(--lime-ink); }
-.subscribe-status[data-kind="error"] { color: #8a3a30; }
+.subscribe-status { margin: 10px 0 0; font-size: 0.84rem; min-height: 20px; }
+.subscribe-status[data-kind="success"] { color: var(--signal-green); }
+.subscribe-status[data-kind="error"] { color: var(--signal-red); }
 .subscribe-status[data-kind="info"] { color: var(--text-muted); }
 
-@media (prefers-color-scheme: dark) {
-  .subscribe-status[data-kind="error"] { color: #d97a6c; }
-}
-
-/* --- Support panel ----------------------------------------------------------- */
+/* --- Support panel ------------------------------------------------------------ */
 
 .status-support .support-panel {
-  border: 1px solid var(--line);
-  border-radius: var(--r-md);
-  background: var(--paper-raised);
-  padding: 22px 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  box-shadow: var(--shadow-xs);
+  border-top: 1px solid var(--line);
+  padding: 24px 0 0;
+  display: flex; align-items: center; justify-content: space-between; gap: 20px;
 }
 
-.support-text h2 { margin: 0 0 6px; font-size: 1.05rem; }
-.support-text p { margin: 0; font-size: 13.5px; color: var(--text-muted); max-width: 52ch; }
+.support-text h2 { margin: 0 0 6px; font-size: 0.98rem; }
+.support-text p { margin: 0; font-size: 0.86rem; color: var(--text-muted); max-width: 50ch; }
 .support-actions { display: flex; gap: 10px; flex: none; }
 
 .btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 20px;
-  border-radius: var(--r-full);
-  font-size: 0.85rem;
-  font-weight: 700;
-  text-decoration: none;
-  cursor: pointer;
-  transition: transform 140ms var(--ease-out), background 140ms var(--ease-out), border-color 140ms var(--ease-out);
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 8px 16px; border-radius: var(--r-md);
+  font-size: 0.84rem; font-weight: 600; text-decoration: none; cursor: pointer;
   white-space: nowrap;
 }
 
-.btn-primary {
-  background: linear-gradient(135deg, var(--lime), #c9f37a);
-  color: var(--ink);
-  border: none;
-  box-shadow: 0 6px 18px -10px rgba(110, 131, 29, 0.28);
-}
+.btn-primary { background: var(--accent); color: #fff; border: 1px solid var(--accent); }
+.btn-primary:hover { background: var(--accent-strong); border-color: var(--accent-strong); text-decoration: none; }
 
-.btn-primary:hover { transform: translateY(-1px); }
-
-.btn-secondary {
-  border: 1px solid var(--line-strong);
-  background: var(--paper-raised);
-  color: var(--text);
-}
-
-.btn-secondary:hover { background: var(--paper-sunken); }
+.btn-secondary { border: 1px solid var(--line-strong); background: var(--paper); color: var(--text); }
+.btn-secondary:hover { background: var(--paper-sunken); text-decoration: none; }
 
 /* --- Main rhythm --------------------------------------------------------------- */
 
-#main .status-shell { padding-bottom: 72px; }
-
+#main .status-shell { padding-bottom: 56px; }
 .status-section:last-of-type { margin-bottom: 0; }
 
-/* --- Legacy selectors kept for 404.html, which shares this sheet -------------- */
+.status-main { padding-block: 4px 64px; }
 
-.status-hero .status-pill { font-size: 13px; padding: 6px 18px; }
-.status-hero .logo-mark { display: none; }
-.status-hero-grid { display: block; }
-.status-hero-meta { display: flex; gap: 24px; flex-wrap: wrap; }
-.status-last-updated { display: inline-flex; align-items: center; gap: 8px; }
-.status-last-updated .status-dot { width: 7px; height: 7px; box-shadow: none; }
-.status-indicator { display: flex; align-items: center; gap: 14px; }
-.status-indicator .status-dot { width: 18px; height: 18px; }
-.status-indicator .status-icon { width: 32px; height: 32px; }
-.status-indicator-text { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.03em; }
-.status-indicator-subtext { font-size: 0.9rem; color: var(--text-muted); }
+@media (max-width: 700px) {
+  .status-uptime-summary, .uptime-grid { grid-template-columns: repeat(2, 1fr); }
+  .status-support .support-panel { flex-direction: column; align-items: flex-start; }
+  .support-actions { width: 100%; }
+  .support-actions .btn { flex: 1; }
+}

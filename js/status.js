@@ -34,10 +34,11 @@
 
     var indicator = document.getElementById("status-indicator");
     if (indicator) {
-      /* Use setAttribute for class: SVG elements expose className as a
-       * read-only SVGAnimatedString, and this block may touch both HTML and
-       * SVG children. */
-      indicator.setAttribute("class", "status-indicator " + tone);
+      /* Keep the "status-state" class (styling hooks onto data-state) and
+       * update data-state to the real tone instead of replacing the class,
+       * which previously left the banner stuck on its loading appearance. */
+      indicator.setAttribute("class", "status-state");
+      indicator.setAttribute("data-state", tone);
       var icon = indicator.querySelector(".status-icon");
       var text = indicator.querySelector(".status-indicator-text");
       if (icon) icon.setAttribute("class", "status-icon " + tone);

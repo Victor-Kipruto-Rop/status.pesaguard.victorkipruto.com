@@ -27,8 +27,8 @@
 
     if (active.length === 0) {
       container.innerHTML =
-        '<div class="status-empty" style="text-align:center;padding:48px 24px;border:1px solid var(--line);border-radius:var(--r-md);background:var(--paper-raised);">' +
-        '<p style="margin:0;color:var(--text-muted)">No active incidents. All systems operational.</p>' +
+        '<div class="status-empty">' +
+        "<p>No active incidents. All systems operational.</p>" +
         "</div>";
       return;
     }
@@ -108,9 +108,9 @@
 
     if (yearKeys.length === 0) {
       container.innerHTML =
-        '<div class="status-empty" style="text-align:center;padding:48px 24px;border:1px solid var(--line);border-radius:var(--r-md);background:var(--paper-raised);">' +
+        '<div class="status-empty">' +
         "<h2>No incident history</h2>" +
-        "<p style=\"color:var(--text-muted);max-width:48ch;margin:0 auto;\">There are no past incidents recorded.</p>" +
+        "<p>There are no past incidents recorded.</p>" +
         "</div>";
       return;
     }
@@ -129,9 +129,7 @@
     });
 
     if (html === "") {
-      html = '<div class="status-empty" style="text-align:center;padding:48px 24px;">' +
-        '<p style="color:var(--text-muted)">No incidents match the selected filters.</p>' +
-        "</div>";
+      html = '<div class="status-empty"><p>No incidents match the selected filters.</p></div>';
     }
     container.innerHTML = html;
   }

@@ -1,34 +1,31 @@
 /* -----------------------------------------------------------------------
- * PesaGuard Status Site — Global styles
- * -----------------------------------------------------------------------
- * Typography, colour helpers, and baseline utilities that every page shares.
- * This file intentionally mirrors the docs `variables.css` body rules with
- * status-site-specific additions.
+ * PesaGuard Status — Global styles
  * ------------------------------------------------------------------------- */
 
-/* --- Typography scale ------------------------------------------------------ */
 .status-page h1 {
-  font-size: clamp(2rem, 1.3rem + 3vw, 3.2rem);
-  line-height: 1.04;
-  letter-spacing: -0.045em;
-  margin: 0 0 16px;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: clamp(1.5rem, 1.25rem + 1vw, 1.85rem);
+  line-height: 1.25;
+  letter-spacing: -0.005em;
+  margin: 0 0 10px;
   color: var(--ink);
 }
 
 .status-page h2 {
-  font-size: 1.4rem;
-  letter-spacing: -0.02em;
-  margin: 44px 0 10px;
-  padding-top: 20px;
-  border-top: 1px solid var(--line-soft);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  margin: 0;
 }
 
 .status-page h3 {
-  font-size: 1.08rem;
-  margin: 28px 0 8px;
+  font-size: 0.98rem;
+  font-weight: 600;
+  margin: 0 0 8px;
 }
 
-.status-page p { margin: 0 0 14px; }
+.status-page p { margin: 0 0 14px; color: var(--text-muted); }
 
 .status-page ul, .status-page ol {
   margin: 0 0 16px;
@@ -36,7 +33,7 @@
 }
 
 .status-page li { margin-bottom: 6px; }
-.status-page li::marker { color: var(--lime-deep); }
+.status-page li::marker { color: var(--accent); }
 
 .status-page small { color: var(--text-faint); }
 
@@ -44,12 +41,11 @@
   font: 500 0.86em / 1.5 var(--font-mono);
   background: var(--paper-sunken);
   border: 1px solid var(--line-soft);
-  border-radius: 5px;
+  border-radius: var(--r-sm);
   padding: 1px 6px;
   white-space: nowrap;
 }
 
-/* --- Utility classes ------------------------------------------------------- */
 .text-center { text-align: center; }
 .text-muted { color: var(--text-muted); }
 .text-faint { color: var(--text-faint); }
@@ -57,96 +53,63 @@
 .text-warning { color: var(--signal-amber); }
 .text-danger { color: var(--signal-red); }
 
-/* --- Layout helpers -------------------------------------------------------- */
 .status-container {
   max-width: var(--site-max);
   margin-inline: auto;
-  padding-inline: clamp(20px, 4vw, 44px);
+  padding-inline: clamp(20px, 4vw, 32px);
 }
 
-.status-main {
-  padding-block: 40px 96px;
-}
+.status-main { padding-block: 8px 96px; }
 
-.status-max-width {
-  max-width: 76ch;
-}
+.status-max-width { max-width: 62ch; }
 
-/* --- Eyebrow --------------------------------------------------------------- */
+/* Small quiet section label — no tracked-out caps, no leading rule. */
 .status-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  margin: 0 0 14px;
-  font: 500 12px / 1.4 var(--font-mono);
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: var(--lime-deep);
+  display: block;
+  margin: 0 0 10px;
+  font: 500 0.82rem / 1.4 var(--font-sans);
+  color: var(--text-faint);
 }
 
-.status-eyebrow::before {
-  content: "";
-  width: 24px;
-  height: 1px;
-  background: currentColor;
-  opacity: 0.6;
-}
-
-/* --- Section heading -------------------------------------------------------- */
 .status-section-title {
-  margin-bottom: 26px;
+  margin-bottom: 20px;
   display: flex;
-  align-items: center;
+  align-items: baseline;
   justify-content: space-between;
   gap: 16px;
 }
 
-.status-section-title h2 {
-  margin: 0;
-  padding: 0;
-  border: 0;
-}
+.status-section-title h2 { margin: 0; }
 
 .status-section-title .view-all {
-  font: 600 11px / 1.4 var(--font-mono);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  font: 500 0.82rem / 1.4 var(--font-sans);
   color: var(--text-faint);
 }
 
-.status-section-title .view-all:hover { color: var(--text); }
+.status-section-title .view-all:hover { color: var(--accent); }
 
-/* --- Card grid ------------------------------------------------------------- */
+/* Ledger list — replaces the card-grid pattern site-wide. */
 .status-card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 14px;
-  margin: 22px 0 30px;
+  display: flex;
+  flex-direction: column;
+  margin: 4px 0 24px;
+  border-top: 1px solid var(--line);
 }
 
 .status-card {
-  display: block;
-  border: 1px solid var(--line);
-  border-radius: var(--r-md);
-  background: var(--paper-raised);
-  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 2px;
+  border-bottom: 1px solid var(--line);
   text-decoration: none;
   color: inherit;
-  transition: border-color 140ms var(--ease-out), box-shadow 140ms var(--ease-out), transform 140ms var(--ease-out);
+  transition: background 120ms var(--ease-out);
 }
 
-.status-card:hover {
-  border-color: var(--line-strong);
-  box-shadow: var(--shadow-sm);
-  transform: translateY(-1px);
-}
+.status-card:hover { background: var(--paper-sunken); text-decoration: none; }
 
-.status-card:focus-visible {
-  outline: 2px solid var(--lime-deep);
-  outline-offset: 2px;
-}
-
-/* Screen-reader-only text — alias of visually-hidden. */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -173,6 +136,6 @@
   border: 1px solid var(--line-strong);
   border-radius: var(--r-sm);
   box-shadow: var(--shadow-md);
-  font-weight: 700;
+  font-weight: 600;
   text-decoration: none;
 }

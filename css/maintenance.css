@@ -1,159 +1,110 @@
 /* -----------------------------------------------------------------------
- * PesaGuard Status Site — Maintenance page
+ * PesaGuard Status — Maintenance page
  * ------------------------------------------------------------------------- */
 
-.maintenance-header {
-  padding: clamp(36px, 5vw, 64px) 0;
-}
-
-.maintenance-header .status-pill {
-  font-size: 13px;
-  padding: 6px 18px;
-}
+.maintenance-header { padding: clamp(36px, 5vw, 56px) 0 clamp(20px, 3vw, 28px); }
+.maintenance-header .status-pill { font-size: 0.92rem; }
 
 /* --- Maintenance sections -------------------------------------------------- */
 
-.maintenance-sections {
-  margin-top: 26px;
-}
-
-.maintenance-section {
-  margin-bottom: 38px;
-}
+.maintenance-sections { margin-top: 24px; }
+.maintenance-section { margin-bottom: 34px; }
 
 .maintenance-section-title {
   display: inline-block;
-  font: 600 10px / 1.4 var(--font-mono);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font: 500 0.82rem / 1.4 var(--font-sans);
   color: var(--text-faint);
   margin-bottom: 14px;
-  padding-bottom: 6px;
-  border-bottom: 1px solid var(--line-soft);
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+  width: 100%;
 }
 
-.maintenance-section-title[data-tone="scheduled"] {
-  color: var(--signal-amber);
+.maintenance-section-title[data-tone="scheduled"] { color: var(--signal-amber); }
+.maintenance-section-title[data-tone="in-progress"] { color: var(--signal-red); }
+.maintenance-section-title[data-tone="completed"] { color: var(--signal-green); }
+
+/* --- Affected services chips ------------------------------------------------ */
+
+.maintenance-card-services {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
 }
 
-.maintenance-section-title[data-tone="in-progress"] {
-  color: var(--signal-red);
+.maintenance-card-services .service-label {
+  font: 600 0.72rem / 1.4 var(--font-sans);
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
 }
 
-.maintenance-section-title[data-tone="completed"] {
-  color: var(--signal-green);
+.maintenance-card-services .service-chip {
+  background: var(--paper-sunken);
+  border: 1px solid var(--line);
+  color: var(--text-muted);
+  padding: 2px 9px;
+  border-radius: var(--r-full);
+  font-size: 0.78rem;
 }
 
-/* --- Maintenance timeline -------------------------------------------------- */
+/* --- Maintenance timeline (in-progress windows) ----------------------------- */
 
 .maintenance-timeline {
-  margin-top: 16px;
-  padding: 0 0 0 22px;
+  margin-top: 14px;
+  padding: 0 0 0 16px;
   border-left: 2px solid var(--line-soft);
-  list-style: none;
 }
 
-.maintenance-timeline li {
-  position: relative;
-  padding: 10px 0 10px 14px;
-  margin-bottom: 0;
-  border-bottom: 0;
-  font-size: 13px;
-}
+.maintenance-timeline-item { position: relative; padding: 8px 0; font-size: 0.85rem; }
+.maintenance-timeline-item:not(:last-child) { border-bottom: 1px solid var(--line-soft); }
 
-.maintenance-timeline li::before {
+.maintenance-timeline-item::before {
   content: "";
   position: absolute;
-  left: -7px;
-  top: 4px;
-  width: 10px;
-  height: 10px;
+  left: -21px;
+  top: 13px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  border: 2px solid var(--line);
+  border: 2px solid var(--signal-red);
   background: var(--paper);
 }
 
-.maintenance-timeline li.maintenance-in-progress::before {
-  border-color: var(--signal-red);
-  background: var(--signal-red);
-}
-
-.maintenance-timeline li.maintenance-completed::before {
-  border-color: var(--signal-green);
-  background: var(--signal-green);
-}
-
-.maintenance-timeline .timeline-timestamp {
-  font: 500 10.5px / 1.4 var(--font-mono);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+.maintenance-timeline-item .timeline-timestamp {
+  font: 600 0.76rem / 1.4 var(--font-sans);
   color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
 }
 
-.maintenance-timeline .timeline-desc {
-  color: var(--text-muted);
-  margin: 2px 0 0;
-}
-
-/* --- Maintenance empty state ------------------------------------------------ */
-
-.maintenance-empty {
-  text-align: center;
-  padding: 56px 24px;
-  border: 1px solid var(--line);
-  border-radius: var(--r-md);
-  background: var(--paper-raised);
-}
-
-.maintenance-empty .empty-icon {
-  width: 48px;
-  height: 48px;
-  margin: 0 auto 18px;
-  opacity: 0.4;
-}
-
-.maintenance-empty h2 {
-  font-size: 1.3rem;
-  margin: 0 0 8px;
-}
-
-.maintenance-empty p {
-  color: var(--text-muted);
-  max-width: 48ch;
-  margin: 0 auto 20px;
-}
+.maintenance-timeline-item .timeline-desc { color: var(--text-muted); margin: 2px 0 0; }
 
 /* --- Maintenance history table --------------------------------------------- */
 
+.maintenance-history-table-wrapper { overflow-x: auto; }
+
 .maintenance-history-table {
   width: 100%;
-  border: 1px solid var(--line);
-  border-radius: var(--r-md);
+  border: none;
+  border-top: 1px solid var(--line);
+  border-radius: 0;
   overflow: hidden;
-  background: var(--paper-raised);
-  font-size: 13px;
+  background: none;
+  font-size: 0.86rem;
 }
 
 .maintenance-history-table th {
-  font: 600 10.5px / 1.4 var(--font-mono);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font: 500 0.78rem / 1.4 var(--font-sans);
   color: var(--text-faint);
-  background: var(--paper-sunken);
-  padding: 10px 14px;
+  background: none;
+  padding: 10px 12px;
   text-align: left;
-  border-bottom: 1px solid var(--line-soft);
+  border-bottom: 1px solid var(--line);
 }
 
-.maintenance-history-table td {
-  padding: 11px 14px;
-  border-bottom: 1px solid var(--line-soft);
-  vertical-align: top;
-}
-
+.maintenance-history-table td { padding: 11px 12px; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
 .maintenance-history-table tr:last-child td { border-bottom: 0; }
-
-.maintenance-history-table .status-pill {
-  font-size: 10px;
-  padding: 3px 10px;
-}
+.maintenance-history-table .status-pill { font-size: 0.82rem; }

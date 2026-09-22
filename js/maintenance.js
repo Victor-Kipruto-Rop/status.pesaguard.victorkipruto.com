@@ -43,9 +43,7 @@
 
     if (active.length === 0) {
       container.innerHTML =
-        '<div class="status-empty" style="text-align:center;padding:48px 24px;border:1px solid var(--line);border-radius:var(--r-md);background:var(--paper-raised);">' +
-        "<p style=\"margin:0;color:var(--text-muted)\">No maintenance in progress.</p>" +
-        "</div>";
+        '<div class="status-empty"><p>No maintenance in progress.</p></div>';
       return;
     }
     container.innerHTML = active.map(renderMaintenanceCard).join("");
@@ -59,9 +57,7 @@
 
     if (upcoming.length === 0) {
       container.innerHTML =
-        '<div class="status-empty" style="text-align:center;padding:48px 24px;border:1px solid var(--line);border-radius:var(--r-md);background:var(--paper-raised);">' +
-        "<p style=\"margin:0;color:var(--text-muted)\">No scheduled maintenance.</p>" +
-        "</div>";
+        '<div class="status-empty"><p>No scheduled maintenance.</p></div>';
       return;
     }
     container.innerHTML = upcoming.map(renderMaintenanceCard).join("");
@@ -75,10 +71,7 @@
 
     if (completed.length === 0) {
       container.innerHTML =
-        '<div class="status-empty" style="text-align:center;padding:48px 24px;border:1px solid var(--line);border-radius:var(--r-md);background:var(--paper-raised);">' +
-        "<h2>No maintenance history</h2>" +
-        "<p style=\"color:var(--text-muted);max-width:48ch;margin:0 auto;\">There are no past maintenance windows recorded.</p>" +
-        "</div>";
+        '<div class="status-empty"><h2>No maintenance history</h2><p>There are no past maintenance windows recorded.</p></div>';
       return;
     }
 
@@ -112,21 +105,21 @@
     html += '<div class="maintenance-card-body">';
     html += "<p>" + UI.escapeHTML(m.description || "") + "</p>";
     if (m.services && m.services.length > 0) {
-      html += '<div class="maintenance-card-services"><span class="service-label" style="font-weight:600;color:var(--text-faint);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;">Affected services:</span>';
+      html += '<div class="maintenance-card-services"><span class="service-label">Affected services:</span>';
       m.services.forEach(function (s) {
-        html += '<span style="background:var(--paper-sunken);border:1px solid var(--line);padding:3px 9px;border-radius:999px;font-size:11.5px;">' + UI.escapeHTML(s) + "</span>";
+        html += '<span class="service-chip">' + UI.escapeHTML(s) + "</span>";
       });
       html += "</div>";
     }
     /* Timeline for in-progress items */
     if (m.timeline && m.timeline.length > 0 && m.status === "in-progress") {
-      html += '<div class="maintenance-timeline" style="margin-top:16px;padding:0 0 0 22px;border-left:2px solid var(--line-soft);list-style:none;">';
+      html += '<div class="maintenance-timeline">';
       m.timeline.forEach(function (entry) {
-        html += '<div style="position:relative;padding:10px 0 10px 14px;border-bottom:1px solid var(--line-soft);font-size:13px;">';
-        html += '<div class="timeline-timestamp" style="font:500 10.5px/1.4 var(--font-mono);letter-spacing:0.06em;text-transform:uppercase;color:var(--text-faint);">';
+        html += '<div class="maintenance-timeline-item">';
+        html += '<div class="timeline-timestamp">';
         html += UI.formatDate(entry.timestamp, { year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" });
         html += "</div>";
-        html += '<div class="timeline-desc" style="color:var(--text-muted);margin:2px 0 0;">' + UI.escapeHTML(entry.description || "") + "</div>";
+        html += '<div class="timeline-desc">' + UI.escapeHTML(entry.description || "") + "</div>";
         html += "</div>";
       });
       html += "</div>";
