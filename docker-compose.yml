@@ -1,0 +1,52 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: pesaguard
+      POSTGRES_PASSWORD: pesaguard
+      POSTGRES_DB: pesaguard_status
+    ports:
+      - "5432:5432"
+    volumes:
+      - pesaguard_pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pesaguard -d pesaguard_status"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: .
+      dockerfile: infrastructure/docker/Dockerfile.backend
+    env_file:
+      - backend/.env
+    environment:
+      DATABASE_URL: postgresql+asyncpg://pesaguard:pesaguard@postgres:5432/pesaguard_status
+      REDIS_URL: redis://redis:6379/0
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    command: >
+      sh -c "alembic upgrade head &&
+             python seed.py &&
+             uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
+    volumes:
+      - ./backend:/app
+
+volumes:
+  pesaguard_pg_data:
