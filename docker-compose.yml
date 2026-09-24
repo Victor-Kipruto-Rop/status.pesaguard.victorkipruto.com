@@ -48,5 +48,21 @@ services:
     volumes:
       - ./backend:/app
 
+  worker:
+    build:
+      context: .
+      dockerfile: infrastructure/docker/Dockerfile.backend
+    env_file:
+      - backend/.env
+    environment:
+      DATABASE_URL: postgresql+asyncpg://pesaguard:pesaguard@postgres:5432/pesaguard_status
+      REDIS_URL: redis://redis:6379/0
+    depends_on:
+      backend:
+        condition: service_started
+    command: python -m worker.main
+    volumes:
+      - ./backend:/app
+
 volumes:
   pesaguard_pg_data:

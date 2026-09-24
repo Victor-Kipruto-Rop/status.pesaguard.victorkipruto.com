@@ -34,6 +34,12 @@ class Settings(BaseSettings):
     # --- Uptime aggregation ---
     uptime_history_days: int = 90
 
+    # --- Monitoring worker (polls the real PesaGuard API's /health) ---
+    pesaguard_api_base_url: str = "https://api.pesaguard.victorkipruto.com"
+    pesaguard_api_health_path: str = "/health"
+    monitor_poll_interval_seconds: int = 30
+    monitor_http_timeout_seconds: float = 5.0
+
     @property
     def cors_origin_list(self) -> list[str]:
         if self.cors_origins == "*":
